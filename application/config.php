@@ -238,4 +238,10 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
+    //验证码配置
+    'captcha'               => [
+        'imageH'   => 50,
+        'imageW'   => 200,
+    ],
 ];
