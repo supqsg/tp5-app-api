@@ -10,6 +10,8 @@ namespace app\admin\controller;
 
 
 
+use app\common\lib\IAuth;
+
 class Admin extends Base
 {
     /**
@@ -24,7 +26,7 @@ class Admin extends Base
             if(!$validate->check($data)) {
                 $this->error($validate->getError());
             }
-            $data['password'] = md5($data['password'].'tp5_app_api');
+            $data['password'] = IAuth::setPassword($data['password']);
             $data['status'] = 1;
             //数据入库
             try{

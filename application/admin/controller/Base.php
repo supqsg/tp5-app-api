@@ -23,7 +23,7 @@ class Base extends Controller
 
     public function isLogin()
     {
-       //获取session
+       //获取session,用法可参考tp5手册的session助手函数
         $user = session(config('AdminUser.session_name'),'',config('AdminUser.session_scope'));
         if($user && $user->id) {
             return true;

@@ -14,7 +14,6 @@ use think\Model;
 class AdminUser extends Model
 {
     protected $autoWriteTimestamp = true;
-
     /**
      * 添加后台登陆用户
      * @param $data
@@ -27,7 +26,8 @@ class AdminUser extends Model
         if(!is_array($data)) {
             exception('传递数据不合法');
         }
-        $this->allowField(true)->save($data);
+        $this->data = $data;
+        $this->allowField(true)->save();
         //返回新增的id
         return $this->id;
     }

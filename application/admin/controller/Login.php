@@ -10,7 +10,7 @@ namespace app\admin\controller;
 
 
 use app\common\lib\IAuth;
-use think\Session;
+use app\common\model\AdminUser;
 
 class Login extends Base
 {
@@ -45,7 +45,7 @@ class Login extends Base
             if(!$validate->check($data)) {
                 $this->error($validate->getError());
             }
-            $user = model('AdminUser')->get(['username'=>$data['username']]);
+            $user = AdminUser::get(['username'=>$data['username']]);
             if(!$user || $user->status != config('AdminUser.normal_status')) {
                 $this->error('登陆账号不存在');
             }
@@ -56,12 +56,14 @@ class Login extends Base
             $udata = [
                 'login_ip' =>request()->ip(),
                 'last_login_time'  => time(),
+                'id' =>$user->id,
             ];
             try{
-                model('AdminUser')->save($udata,['id'=>$user->id]);
+                AdminUser::update($udata);
             }catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
+            //session()参考手册中的助手函数的使用
             session(config('AdminUser.session_name'),$user,config('AdminUser.session_scope'));
             $this->success('登陆成功','index/index');
 
