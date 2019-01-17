@@ -20,7 +20,12 @@ class News extends Base
     {
         if(request()->isPost()) {
             $data = input('post.');
-            //TODO 数据验证
+            
+            $validate = validate('News');
+            if(!$validate->check($data)) {
+                $this->error($validate->getError());
+            }
+
             try {
                 $id = model('News')->add($data);
 
@@ -30,6 +35,7 @@ class News extends Base
             if(!$id) {
                 return $this->result('',0,'新增失败');
             }
+
             return $this->result(['jumpUrl'=>url('news/index')],1,'新增文章成功');
 
         } else{

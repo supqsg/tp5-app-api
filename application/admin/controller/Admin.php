@@ -21,20 +21,17 @@ class Admin extends Base
     {
         if(request()->isPost()) {
             $data = input('post.');
-            //验证数据合法性
             $validate = validate('AdminUser');
             if(!$validate->check($data)) {
                 $this->error($validate->getError());
             }
             $data['password'] = IAuth::setPassword($data['password']);
             $data['status'] = 1;
-            //数据入库
             try{
                 $id = model('AdminUser')->add($data);
             }catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            //入库成功后操作
             if($id) {
                 $this->success('id='.$id.'用户入库成功');
             }
