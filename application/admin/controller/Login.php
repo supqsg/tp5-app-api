@@ -54,7 +54,7 @@ class Login extends Base
             }
             //更新用户登陆时间等信息
             $udata = [
-                'login_ip' =>request()->ip(),
+                'last_login_ip' =>request()->ip(),
                 'last_login_time'  => time(),
                 'id' =>$user->id,
             ];
